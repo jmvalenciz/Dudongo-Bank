@@ -1,0 +1,7 @@
+certs/
+.DS_Store/
+./.cert_passkeys
+./volumes/
+
+**/*.jks
+**/*.sqlite*

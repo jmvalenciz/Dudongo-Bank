@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: cuentas
+  rabbitmq:
+    host: localhost
+    port: 5671
+    username: guest
+    password: guest
+    listener:
+      type: simple
+      simple:
+        header-propagation: true
+    ssl:
+      enabled: true
+      key-store: classpath:cuentas.jks
+      key-store-password: 3hgKF7pwIj9XHYxB
+      key-store-type: JKS
+      trust-store: classpath:truststore.jks
+      trust-store-password: eGVG0IYHPTPOhVj8
+      trust-store-type: JKS
+      verify-hostname: false
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/dudongo_bank_cuentas
+    username: root
+    password: root
+springdoc:
+  api-docs:
+    path: /api-docs
+rabbitmq:
+  queues:
+    clientes:
+      request: clientes.request
+      response: cuentas.clientes.response

@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: clientes
+  rabbitmq:
+    host: localhost
+    port: 5671
+    username: guest
+    password: guest
+    ssl:
+      enabled: true
+      key-store: classpath:clientes.jks
+      key-store-password: YmGICnIt9GphuuV3
+      key-store-type: JKS
+      trust-store: classpath:truststore.jks
+      trust-store-password: eGVG0IYHPTPOhVj8
+      trust-store-type: JKS
+      verify-hostname: false
+    listener:
+      type: simple
+      simple:
+        header-propagation: true
+rabbitmq:
+  queues:
+    clientes:
+      request: clientes.request
+services:
+  core:
+    baseUrl: http://localhost:3000/api/v1
+server:
+  port : 8081

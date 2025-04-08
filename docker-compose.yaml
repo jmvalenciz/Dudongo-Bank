@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: never
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    volumes:
+      - ./volumes/postgresql:/var/lib/postgresql
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: dudongo_bank_cuentas
+    ports:
+      - 5432:5432
+  rabbitmq:
+    #image: rabbitmq:4-alpine
+    image: rabbitmq:4-management
+    restart: never
+    ports:
+      - 5671:5671
+      - 15672:15672
+    volumes:
+      - ./certs/rabbitmq.pem:/etc/rabbitmq/ssl/rabbitmq.pem:ro
+      - ./certs/ca.crt:/etc/rabbitmq/ssl/ca.crt:ro
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+  zipkin:
+    image: openzipkin/zipkin:latest
+    ports:
+      - 9411:9411
+    depends_on:
+      - rabbitmq
+    environment:
+      # RABBIT_URI: amqp://guest:guest@rabbitmq:5671
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - 1025:1025
+      - 8025:8025
